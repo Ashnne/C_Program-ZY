@@ -567,3 +567,181 @@ void Paste()
 	//文件用完就关好习惯
 	fclose(clipBoard); 
 }
+
+
+6.Text函数
+
+/*
+Test函数
+ 
+ 1.无需要输入的变量：
+ 2.无返回值 
+ 3.实现的功能，将buffFile中的内容打印在框内 ，并把首位光标表现出来
+ 4.需要用到的函数：辅助函数：
+                        drawLighting();//画出选中的加亮
+			drawCursor();//画光标
+   需要用到的全局变量：FILE *buffFile;
+   					int cursorBegin;
+   					int cursorTail;
+                    int rawMax;
+                    int charCount[1000];
+                    double width;
+                    double height;
+                    double textwidth;//两个字之间的左右距离
+                    double textheight;//两个字之间的上下
+                    int k;char* color[];//color[k]就是当前字体的颜色
+ 5.待优化的功能 
+ 		填充有点问题，无法填充 
+
+ 6.测试函数 
+#include<stdio.h>
+#include<stdlib.h>
+#include "imgui.h"
+#include "graphics.h"
+
+void Text();
+int Count();
+void drawLighting();
+void drawCursor();
+
+
+FILE *buffFile;
+int cursorBegin;
+int cursorTail;
+int rawMax;
+int charCount[1000];
+double width;
+double height;
+double f;
+double textwidth;//两个字之间的左右距离
+double textheight;//两个字之间的上下
+int k;char* color[] = {"Black","Red"};//color[k]就是当前字体的颜色
+                    
+void Main(){
+	InitGraphics();
+	InitConsole();
+	k = 0;
+	buffFile = fopen("buffFile.txt","a+");
+	cursorBegin = 1;
+	cursorTail = 2;
+	rawMax = Count();
+	width = 1;
+	height = 15;
+	f = 3;
+	textwidth = 1;
+	textheight = 1;
+	Text();
+} 
+
+int Count(){
+        //这个是每一行的计数个数
+        int i = 0;
+        //这个是在数行
+        int j = 1;
+        //开始数
+        fseek(buffFile,0,0);
+        //过度字符
+        char ch = 1;
+        while(!feof(buffFile)){
+            ch = fgetc(buffFile);
+            //如果字符为EOF，就说明结束了
+            if( ch == EOF){
+                charCount[j] = i;
+                return j;
+            }
+            //如果字符为\n，说明该跳转下一行了
+            else if( ch == '\n'){
+                //赋值
+                charCount[j] = i;
+                //计数清零
+                i = 0;
+                //行数跳转下一个
+                j++;
+            }
+            //其他情况计数+1
+            else    i++;
+        }
+    //如果因为读取到文件末尾了，也说明结束了
+    charCount[j] = i;
+    return j;
+    }
+*/
+
+
+void Text(){
+    //X的坐标原点
+	int X_zero = width / 10;
+    //Y的坐标原点
+    int Y_zero =  height - f * 3 ;
+    //光标的位置，便于实现光标
+    int count = 0;
+    //判断，如果是选中的字符串的话，后面加个背景
+    int judgeChosen = 0;
+    //临时字符中转
+    int tempChar[2] = {'a','\0'};
+    
+    int i;
+    for( i = 1;i <= rawMax; i++){
+    	int j;
+    	//printf("%s","Now is fine");
+        for( j = 0; j <= charCount[i] ;j++){
+            //根据光标在文本中的位置，把笔放到不同的位置上
+            MovePen( X_zero + j * textwidth, Y_zero - i * textheight);
+            //把笔设计好，分两类，count在不在光标内
+            if( count >= cursorBegin && count <= cursorTail )   judgeChosen = 1;
+            else    judgeChosen = 0;
+            
+            //读一下文件里的字符
+            fseek(buffFile,count,0); 
+            tempChar[0] = fgetc(buffFile);
+            //这是个填补条件，因为我发现用dev的话，换行算两个字符 
+            if(tempChar[0] == '\n')	count++;
+
+            //如果是选中的，就在后面画个格子，突出嘛
+            if( judgeChosen)	drawLighting();
+            
+            //先放着吧，写个字（写字,暂时就用DrawTextString把，我想换成更简单的。。。。
+            //看不透，不换了，就这个吧,\n也打，但是没啥用 
+            //颜色改回来
+            SetPenColor(color[k]);
+            DrawTextString( tempChar);   
+			         
+	    	//画光标
+            if( count == cursorTail + 1)    drawCursor();
+            //数数加一个
+            count ++;
+        } 
+    }
+}
+
+
+
+void drawLighting(){
+    //选好背景色
+    SetPenColor("Yellow");
+    //打开填充
+    //StartFilledRegion(1);
+    //填充
+    DrawLine(textwidth,0);
+    DrawLine(0,textheight);
+    DrawLine(-textwidth,0);
+    DrawLine(0,-textheight);
+    //把填充模式关闭
+    //EndFilledRegion();
+    return;
+}
+
+void drawCursor(){
+    //选好背景色
+    SetPenColor("Black");
+    //打开填充
+    //StartFilledRegion(1);
+    //填充
+    DrawLine(0.1,0);
+    DrawLine(0,textheight);
+    DrawLine(-0.1,0);
+    DrawLine(0,-textheight);
+    //把填充模式关闭
+    //EndFilledRegion();
+    return;
+}
