@@ -6,6 +6,16 @@ int ant； //定义的语句。
 //特别注意：编辑文件时不关闭文件
 FILE *buffFile = fopen("buffFile.txt","a+");
 
+//定义位置：   意义：背景颜色的序号，用来改背景颜色 
+int k=1;
+//定义位置：   意义：颜色指针数组 白色、粉色、翡翠绿、黄色、紫色、蓝色、橙色 
+char* color[]={"Black","White","Hot Pink","Turquoise","Yellow","Medium Purple","Light Sky Blue","Salmon1"};
+
+//定义位置：   意义：窗口的高和宽 
+double height, width;
+//定义位置：   意义：GetFontHeight()的两倍 
+double f;
+
 //定义位置：   意义：鼠标事件选中文本的头尾指针位置（既选中的文本内容）
 int cursorBegin;
 int cursorTail;
