@@ -230,7 +230,9 @@ void Text(){
             //看不透，不换了，就这个吧
             //颜色改回来
             SetPenColor(color[k]);
-            DrawTextString( tempChar);
+            DrawTextString( tempChar);            
+	    //画光标
+            if( count == cursorTail)    drawCursor();
             //数数加一个
             count ++;
         }
@@ -248,6 +250,21 @@ void drawLighting(){
     DrawLine(textwidth,0);
     DrawLine(0,textheight);
     DrawLine(-textwidth,0);
+    DrawLine(0,-textheight);
+    //把填充模式关闭
+    EndFilledRegion();
+    return;
+}
+
+void drawCursor(){
+    //选好背景色
+    SetPenColor("Black");
+    //打开填充
+    StartFilledRegion(1);
+    //填充
+    DrawLine(0.1,0);
+    DrawLine(0,textheight);
+    DrawLine(0.1,0);
     DrawLine(0,-textheight);
     //把填充模式关闭
     EndFilledRegion();
