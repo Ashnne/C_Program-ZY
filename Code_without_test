@@ -168,9 +168,9 @@ Test函数
  1.无需要输入的变量：
  2.无返回值 
  3.实现的功能，将buffFile中的内容打印在框内 ，并把首位光标表现出来
- 4.需要用到的函数：辅助函数：setPenChosen();//选中的文字
-                        setPenNot();//未选中的文字
+ 4.需要用到的函数：辅助函数：
                         drawLighting();//画出选中的加亮
+			drawCursor();//画光标
    需要用到的全局变量：FILE *buffFile;
    					int cursorBegin;
    					int cursorTail;
