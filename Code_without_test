@@ -418,28 +418,3 @@ typedef struct {
 } UIState;
 
 static UIState gs_UIState;
-
-
-
-int open_allow = 1;
-char *searchContain;
-MenuLise
-
-
-switch(){
-    case 1:open_allow*= -1; 
-}
-display(){
-    open();
-
-}
-void open(){
-    if(open_allow == -1)    return;
-    drawRectangle();
-    drawTextString();
-    drawButton();
-    open_allow *= -1;
-
-}
-
-void DrawBack
