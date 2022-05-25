@@ -1,0 +1,16 @@
+void MouseEventProcess(int x, int y, int button, int event)
+{
+	uiGetMouse(x,y,button,event);
+	mouse_x = ScaleXInches(x);
+	mouse_y = GetWindowHeight()- ScaleXInches(y) ;
+	 switch (event) {
+	 case BUTTON_DOWN:
+		 mouse_down = 1;
+		 break;
+	 case BUTTON_UP:
+		 mouse_down = 0;
+		 break;
+	 }
+}
+
+
