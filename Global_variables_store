@@ -35,3 +35,9 @@ double textheight;//两个字之间的上下
 //定义位置：   意义：剪切板文件的文件指针头
 FILE *clipBoard;
 //特别注意：需要自行打开关闭
+
+//定义位置：   意义：鼠标状态
+double mouse_x;//鼠标位置的x轴位置
+double mouse_y;//鼠标位置的y轴位置
+int mouse_down;//鼠标是否点击，1为点击状态，0为松开状态
+//特别注意：使用单位为imgui的，原点在左下角
