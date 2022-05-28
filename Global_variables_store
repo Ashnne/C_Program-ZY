@@ -41,3 +41,11 @@ double mouse_x;//鼠标位置的x轴位置
 double mouse_y;//鼠标位置的y轴位置
 int mouse_down;//鼠标是否点击，1为点击状态，0为松开状态
 //特别注意：使用单位为imgui的，原点在左下角
+
+//定义位置：   意义：格式窗口是否显示 
+int fontSize_allow;//字体大小的调整界面是否出现
+int textheight_allow;//行间距的调整界面是否出现
+int textwidth_allow;//宽间距的调整界面是否出现
+
+double mouse_y;//鼠标位置的y轴位置
+int mouse_down;//鼠标是否点击，1为点击状态，0为松开状态
